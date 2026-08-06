@@ -35,9 +35,14 @@ HISTSIZE=10000
 SAVEHIST=20000
 
 zmodload -F zsh/terminfo +p:terminfo
-for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
-for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-unset key
+local -a key_up=('^[[A' '^P')
+local -a key_down=('^[[B' '^N')
+[[ -n "${terminfo[kcuu1]}" ]] && key_up+=("${terminfo[kcuu1]}")
+[[ -n "${terminfo[kcud1]}" ]] && key_down+=("${terminfo[kcud1]}")
+
+for key in "${key_up[@]}"; do bindkey "${key}" history-substring-search-up; done
+for key in "${key_down[@]}"; do bindkey "${key}" history-substring-search-down; done
+unset key key_up key_down
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
