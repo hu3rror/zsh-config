@@ -16,7 +16,7 @@ if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop || -n "$WSL_DISTRO_NAME" ]]; then
     fi
 
     # Bridge Windows ssh-agent
-    if command_is_available wsl2-ssh-agent; then
+    if command_is_available wsl2-ssh-agent && [[ -z "$SSH_AUTH_SOCK" || ! -S "$SSH_AUTH_SOCK" ]]; then
         eval "$(wsl2-ssh-agent)"
     fi
 fi
