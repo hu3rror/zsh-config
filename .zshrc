@@ -11,6 +11,7 @@ command_is_available() {
 }
 
 # Autoload Functions Setup
+typeset -U fpath
 fpath=("${_ZDOTDIR}/functions" $fpath)
 autoload -Uz extract sudo-command-line
 
