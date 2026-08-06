@@ -1,20 +1,11 @@
 # ~/.config/zsh/conf.d/20-aliases.zsh - Command Aliases & Fallbacks
 
-check_cmd_or_warn() {
-    if command_is_available "$1"; then
-        return 0
-    else
-        [[ -o interactive ]] && print -P "%F{yellow}[zsh-warn]%f %U$1%u not found. $2"
-        return 1
-    fi
-}
-
 alias se="sudoedit"
 alias grep='grep --color=auto'
 alias ':q'='exit'
 alias '。。'='..'
 
-if check_cmd_or_warn eza "Falling back to standard ls."; then
+if command_is_available eza; then
     alias ls='eza --classify auto'
     alias l='ls --long'
     alias l1='l --oneline'
