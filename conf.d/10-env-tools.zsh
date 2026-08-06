@@ -4,7 +4,7 @@
 #  WSL2 Optimizations
 if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop || -n "$WSL_DISTRO_NAME" ]]; then
     # Hardware accelerated rendering (d3d12)
-    if [ -f /usr/lib/dri/d3d12_dri.so ] || [ -f /usr/lib/x86_64-linux-gnu/dri/d3d12_dri.so ]; then
+    if [[ -f /usr/lib/dri/d3d12_dri.so || -f /usr/lib/x86_64-linux-gnu/dri/d3d12_dri.so ]]; then
         export GALLIUM_DRIVER=d3d12
         export LIBVA_DRIVER_NAME=d3d12
     fi
