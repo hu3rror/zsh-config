@@ -50,6 +50,7 @@ else
     export VISUAL="nano"
 fi
 
+# Load fzf zsh integration if available (cached for speed)
 if command_is_available fzf; then
     if command_is_available fd; then
         export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden --strip-cwd-prefix --exclude={.git,.idea,.sass-cache,node_modules,build}"
@@ -60,24 +61,15 @@ if command_is_available fzf; then
         --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
         --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
         --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
-    
-    # load fzf zsh integration if available
+
+    # Cached fzf initialization
     () {
-        if fzf --zsh >/dev/null 2>&1; then
-            source <(fzf --zsh)
-        else
-            # 降级兼容旧版本硬编码路径
-            local path_dir
-            local fzf_paths=(
-                "/usr/share/fzf"
-                "/usr/share/doc/fzf/examples"
-                "/usr/local/opt/fzf/shell"
-            )
-            for path_dir in "${fzf_paths[@]}"; do
-                [[ -f "${path_dir}/completion.zsh" ]] && source "${path_dir}/completion.zsh"
-                [[ -f "${path_dir}/key-bindings.zsh" ]] && source "${path_dir}/key-bindings.zsh"
-            done
+        local fzf_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/fzf_init.zsh"
+        if [[ ! -f "$fzf_cache" ]]; then
+            mkdir -p "${fzf_cache:h}"
+            fzf --zsh >! "$fzf_cache" 2>/dev/null
         fi
+        [[ -f "$fzf_cache" ]] && source "$fzf_cache"
     }
 fi
 
