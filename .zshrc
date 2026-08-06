@@ -57,8 +57,4 @@ for config_file in "${_ZDOTDIR}/conf.d/"*.zsh(N.on); do
 done
 unset config_file
 
-if [[ -f "${_ZDOTDIR}/functions/p10k.zsh" ]]; then
-    source "${_ZDOTDIR}/functions/p10k.zsh"
-elif [[ -f "${_ZDOTDIR}/.p10k.zsh" ]]; then
-    source "${_ZDOTDIR}/.p10k.zsh"
-fi
+[[ -f "${_ZDOTDIR}/.p10k.zsh" ]] && source "${_ZDOTDIR}/.p10k.zsh"
