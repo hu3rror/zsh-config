@@ -51,24 +51,34 @@ else
 fi
 
 if command_is_available fzf; then
-    local fzf_paths=(
-        "/usr/share/fzf"
-        "/usr/share/doc/fzf/examples"
-        "/usr/local/opt/fzf/shell"
-    )
-    for path_dir in "${fzf_paths[@]}"; do
-        [[ -f "${path_dir}/completion.zsh" ]] && source "${path_dir}/completion.zsh"
-        [[ -f "${path_dir}/key-bindings.zsh" ]] && source "${path_dir}/key-bindings.zsh"
-    done
-    unset fzf_paths path_dir
-
-    export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden --strip-cwd-prefix --exclude={.git,.idea,.sass-cache,node_modules,build}"
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    if command_is_available fd; then
+        export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden --strip-cwd-prefix --exclude={.git,.idea,.sass-cache,node_modules,build}"
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    fi
     export FZF_COMPLETION_OPTS='--border --info=inline'
     export FZF_DEFAULT_OPTS=" \
         --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
         --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
         --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
+    
+    # load fzf zsh integration if available
+    () {
+        if fzf --zsh >/dev/null 2>&1; then
+            source <(fzf --zsh)
+        else
+            # 降级兼容旧版本硬编码路径
+            local path_dir
+            local fzf_paths=(
+                "/usr/share/fzf"
+                "/usr/share/doc/fzf/examples"
+                "/usr/local/opt/fzf/shell"
+            )
+            for path_dir in "${fzf_paths[@]}"; do
+                [[ -f "${path_dir}/completion.zsh" ]] && source "${path_dir}/completion.zsh"
+                [[ -f "${path_dir}/key-bindings.zsh" ]] && source "${path_dir}/key-bindings.zsh"
+            done
+        fi
+    }
 fi
 
 # Wget configuration redirect
