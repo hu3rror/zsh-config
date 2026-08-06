@@ -252,17 +252,19 @@ fi
 command_is_available systemctl && alias sc='systemctl'
 
 if command_is_available xdg-open; then
-    open() {
-        if (( $# == 0 )); then
-            xdg-open . >/dev/null 2>&1 &!
-            return
-        fi
+    if ! command_is_available open; then
+        open() {
+            if (( $# == 0 )); then
+                xdg-open . >/dev/null 2>&1 &!
+                return
+            fi
 
-        local arg
-        for arg in "$@"; do
-            xdg-open "$arg" >/dev/null 2>&1 &!
-        done
-    }
+            local arg
+            for arg in "$@"; do
+                xdg-open "$arg" >/dev/null 2>&1 &!
+            done
+        }
+    fi
 fi
 
 if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
