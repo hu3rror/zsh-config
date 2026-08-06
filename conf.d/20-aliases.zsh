@@ -76,6 +76,9 @@ else
     alias edit='nano'
 fi
 
+# flush zsh init caches
+alias zsh-flush-cache='rm -rf "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh && echo "[zsh] Init caches flushed. Please restart shell."'
+
 if command_is_available pacman; then
     # High-frequency aliases
     alias sp='sudo pacman'
@@ -270,3 +273,4 @@ fi
 if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
     command_is_available nvidia-settings && alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia/settings"
 fi
+
