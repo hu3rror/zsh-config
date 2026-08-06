@@ -21,6 +21,11 @@ bindkey "\e\e" sudo-command-line
 # Aliases for autoload functions
 alias x='extract'
 
+# zsh-syntax-highlighting Setup
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# ZIM Setup
 ZIM_HOME="${XDG_CACHE_HOME:-$HOME/.cache}/zim"
 ZIM_CONFIG_FILE="${_ZDOTDIR}/.zimrc"
 

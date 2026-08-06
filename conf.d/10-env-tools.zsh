@@ -83,6 +83,6 @@ fi
 
 # Wget configuration redirect
 if [[ ! -f "$WGETRC" ]]; then
-    mkdir -p "$(dirname "$WGETRC")"
+    mkdir -p "${WGETRC:h}"
     echo "hsts-file = $XDG_CACHE_HOME/wget-hsts" > "$WGETRC"
 fi

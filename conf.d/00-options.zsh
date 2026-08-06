@@ -30,7 +30,7 @@ setopt hist_verify
 setopt share_history
 
 HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/histfile"
-[[ ! -f "$HISTFILE" ]] && mkdir -p "$(dirname "$HISTFILE")"
+[[ ! -f "$HISTFILE" ]] && mkdir -p "${HISTFILE:h}"
 HISTSIZE=10000
 SAVEHIST=20000
 
@@ -41,8 +41,6 @@ unset key
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#a6e3a1,italic'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=#a6e3a1'
