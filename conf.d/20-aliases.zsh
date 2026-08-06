@@ -77,7 +77,19 @@ else
 fi
 
 # flush zsh init caches
-alias zsh-flush-cache='rm -rf "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh && echo "[zsh] Init caches flushed. Please restart shell."'
+zsh-flush-cache() {
+  emulate -L zsh
+  setopt LOCAL_OPTIONS NULL_GLOB
+
+  local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
+
+  if (( ${#caches} > 0 )); then
+    rm -f "${caches[@]}"
+    echo "[zsh] Custom init caches flushed."
+  else
+    echo "[zsh] No custom cache files found."
+  fi
+}
 
 if command_is_available pacman; then
     # High-frequency aliases
