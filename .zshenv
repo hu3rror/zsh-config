@@ -35,18 +35,15 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 # ------------------------------------------------------------------------------
 typeset -U path PATH
 path=(
-    $HOME/bin
-    $HOME/.local/bin
-    ${CARGO_HOME:-$XDG_DATA_HOME/cargo}/bin
-    $HOME/.detaspace/bin
-    $HOME/.fly/bin
-    $HOME/.local/share/bob/nvim-bin
-    /usr/local/bin
-    /usr/bin
-    /bin
-    /usr/local/sbin
-    /usr/sbin
-    /sbin
+    $HOME/bin(N-/)
+    $HOME/.local/bin(N-/)
+    ${CARGO_HOME:-$XDG_DATA_HOME/cargo}/bin(N-/)
+    $HOME/.detaspace/bin(N-/)
+    $HOME/.fly/bin(N-/)
+    $HOME/.local/share/bob/nvim-bin(N-/)
+    /usr/local/bin(N-/)
+    /usr/bin(N-/)
+    /bin(N-/)
     $path
 )
 export PATH
