@@ -13,7 +13,7 @@ command_is_available() {
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("${_ZDOTDIR}/functions" $fpath)
-autoload -Uz extract sudo-command-line
+autoload -Uz extract sudo-command-line pac
 
 # ZLE Widget Bindings
 zle -N sudo-command-line
