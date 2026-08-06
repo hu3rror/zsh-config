@@ -23,15 +23,8 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-
-# Wget configuration redirect
-WGETRC="$XDG_CONFIG_HOME/wgetrc"
-if [ ! -f "$WGETRC" ]; then
-    HSTS_FILE="$XDG_CACHE_HOME/wget-hsts"
-    echo "hsts-file = $HSTS_FILE" > "$WGETRC"
-fi
-export WGETRC
-
+# ~/.config/zsh/conf.d/10-env-tools.zsh will create this file if it doesn't exist
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 # Xorg configuration redirect
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
