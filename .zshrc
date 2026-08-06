@@ -53,8 +53,6 @@ unset config_file
 
 if [[ -f "${_ZDOTDIR}/functions/p10k.zsh" ]]; then
     source "${_ZDOTDIR}/functions/p10k.zsh"
-elif [[ -f "${_ZDOTDIR}/funtions/p10k.zsh" ]]; then
-    source "${_ZDOTDIR}/funtions/p10k.zsh"
 elif [[ -f "${_ZDOTDIR}/.p10k.zsh" ]]; then
     source "${_ZDOTDIR}/.p10k.zsh"
 fi

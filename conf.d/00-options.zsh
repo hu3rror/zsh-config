@@ -1,7 +1,7 @@
 # ~/.config/zsh/conf.d/00-options.zsh - Shell Options & Keybindings
 
 bindkey -e
-WORDCHARS=${WORDCHARS//[\/;.&]}
+WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
 setopt auto_cd
 setopt cd_silent
