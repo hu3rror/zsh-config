@@ -1,0 +1,37 @@
+# Autoload function: extract
+# Automatically extracts various archive formats
+
+emulate -L zsh
+
+local file
+
+for file; do
+    [[ -f $file ]] || {
+        print -u2 "extract: $file: not found"
+        continue
+    }
+
+    case ${file:l} in
+        (*.rar)
+            if (( $+commands[unar] )); then
+                unar "$file"
+            elif (( $+commands[unrar] )); then
+                unrar x -- "$file"
+            else
+                print -u2 "RAR support missing: install 'unar' (e.g. pacman -S unar)"
+            fi
+            ;;
+
+        (*.7z)
+            if (( $+commands[7z] )); then
+                7z x -- "$file"
+            else
+                print -u2 "7z support missing: install '7zip' (e.g. pacman -S 7zip)"
+            fi
+            ;;
+
+        (*)
+            bsdtar -xf -- "$file"
+            ;;
+    esac
+done

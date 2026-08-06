@@ -1,0 +1,33 @@
+# ------------ Modules ------------
+
+# Applies correct bindkeys for input events.
+zmodule input
+
+
+# ------------ Prompt ------------
+
+zmodule romkatv/powerlevel10k --use degit
+
+
+# ------------ Completion ------------
+
+# should be before zsh-syntax-highlighting, zsh-autosuggestions
+zmodule Aloxaf/fzf-tab
+
+# Additional completion definitions for Zsh, conflicts with fzf-tab
+zmodule zsh-users/zsh-completions --fpath src
+
+# Calls compinit, completion must be sourced after all modules that add completion definitions.
+zmodule completion
+
+
+# ------------ Modules that must be initialized last ------------
+
+# must be sourced after completion
+zmodule zsh-users/zsh-syntax-highlighting
+
+# must be sourced after zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+
+# Fish-like autosuggestions for Zsh
+zmodule zsh-users/zsh-autosuggestions
