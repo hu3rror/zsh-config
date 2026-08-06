@@ -15,7 +15,7 @@ alias ':q'='exit'
 alias '。。'='..'
 
 if check_cmd_or_warn eza "Falling back to standard ls."; then
-    alias ls='eza --classify'
+    alias ls='eza --classify auto'
     alias l='ls --long'
     alias l1='l --oneline'
     alias ll='l --all --group'
