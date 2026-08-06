@@ -44,8 +44,6 @@ for key in "${key_up[@]}"; do bindkey "${key}" history-substring-search-up; done
 for key in "${key_down[@]}"; do bindkey "${key}" history-substring-search-down; done
 unset key key_up key_down
 
-ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#a6e3a1,italic'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=#a6e3a1'
