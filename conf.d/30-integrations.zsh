@@ -3,7 +3,7 @@
 if command_is_available zoxide; then
     local zoxide_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zoxide_init.zsh"
     if [[ ! -f "$zoxide_cache" ]]; then
-        mkdir -p "$(dirname "$zoxide_cache")"
+        mkdir -p "${zoxide_cache:h}"
         zoxide init zsh --cmd cd >! "$zoxide_cache"
     fi
     source "$zoxide_cache"
