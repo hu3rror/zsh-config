@@ -11,15 +11,14 @@ zmodule romkatv/powerlevel10k --use degit
 
 # ------------ Completion ------------
 
-# should be before zsh-syntax-highlighting, zsh-autosuggestions
-zmodule Aloxaf/fzf-tab
-
 # Additional completion definitions for Zsh, conflicts with fzf-tab
 zmodule zsh-users/zsh-completions --fpath src
 
 # Calls compinit, completion must be sourced after all modules that add completion definitions.
 zmodule completion
 
+# should be before zsh-syntax-highlighting, zsh-autosuggestions, and should be after completion
+zmodule Aloxaf/fzf-tab
 
 # ------------ Modules that must be initialized last ------------
 
