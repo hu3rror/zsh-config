@@ -2,7 +2,7 @@
 # Prepends 'sudo' to the current command line buffer upon pressing ESC+ESC
 
 [[ -z $BUFFER ]] && zle up-history
-[[ -BUFFER != sudo\ * && $UID -ne 0 ]] && {
+[[ $BUFFER != sudo\ * && $UID -ne 0 ]] && {
     typeset -a bufs
     bufs=(${(z)BUFFER})
     while (( $+aliases[$bufs[1]] )); do
