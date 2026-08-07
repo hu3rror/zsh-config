@@ -1,32 +1,35 @@
-# ------------ Modules ------------
+# ===================================================================================================
+# Load order (strict) / 加载顺序（严格）：
+# [1] Core & Theme              / 核心与主题
+# [2] Completion Sources        / 补全库
+# [3] Completion Initialization / 补全初始化
+# [4] Completion UI             / 补全界面
+# [5] ZLE Enhancements          / ZLE交互增强
+# [6] Syntax Highlighting       / 语法高亮（load last / 最后加载）
+# ===================================================================================================
 
-# Applies correct bindkeys for input events.
-zmodule input
+
+# --- [1] Core & Theme / 核心与主题 ---
+zmodule input                                      # Enhanced input / 输入增强
+zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示符主题
 
 
-# ------------ Prompt ------------
+# --- [2] Completion Sources / 补全库 ---
+zmodule zsh-users/zsh-completions --fpath src      # Additional completion definitions / 补充补全定义
 
-zmodule romkatv/powerlevel10k --use degit
+
+# --- [3] Completion Initialization / 补全初始化 ---
+zmodule completion                                 # Initialize completion system (compinit) / 初始化补全系统
 
 
-# ------------ Completion ------------
+# --- [4] Completion UI / 补全界面 ---
+zmodule Aloxaf/fzf-tab                             # Fuzzy completion UI (requires compinit) / 模糊补全界面（依赖 compinit）
 
-# Additional completion definitions for Zsh, conflicts with fzf-tab
-zmodule zsh-users/zsh-completions --fpath src
 
-# Calls compinit, completion must be sourced after all modules that add completion definitions.
-zmodule completion
+# --- [5] ZLE Enhancements / ZLE交互增强 ---
+zmodule zsh-users/zsh-autosuggestions               # Command autosuggestions / 命令自动建议
+zmodule zsh-users/zsh-history-substring-search     # History substring search / 历史命令搜索
 
-# should be before zsh-syntax-highlighting, zsh-autosuggestions, and should be after completion
-zmodule Aloxaf/fzf-tab
 
-# ------------ Modules that must be initialized last ------------
-
-# must be sourced after completion
-zmodule zsh-users/zsh-syntax-highlighting
-
-# must be sourced after zsh-users/zsh-syntax-highlighting
-zmodule zsh-users/zsh-history-substring-search
-
-# Fish-like autosuggestions for Zsh
-zmodule zsh-users/zsh-autosuggestions
+# --- [6] Syntax Highlighting / 语法高亮 ---
+zmodule zsh-users/zsh-syntax-highlighting           # Syntax highlighting (load last) / 语法高亮（最后加载）
