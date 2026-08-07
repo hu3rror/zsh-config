@@ -11,7 +11,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # ------------------------------------------------------------------------------
 # 2. CLI & Language Environment Configurations
 # ------------------------------------------------------------------------------
-[[ -o interactive ]] && export GPG_TTY="${TTY:-$(tty 2>/dev/null)}"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export GOPATH="$XDG_DATA_HOME/go"
@@ -23,11 +22,16 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-# ~/.config/zsh/conf.d/10-env-tools.zsh will create this file if it doesn't exist
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"         # ~/.config/zsh/conf.d/10-env-tools.zsh will create this file if it doesn't exist
+
 # Xorg configuration redirect
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+
+# GPG TTY configuration for interactive shells
+if [[ -o interactive ]]; then
+    export GPG_TTY="${TTY:-$(tty 2>/dev/null)}"
+fi
 
 # ------------------------------------------------------------------------------
 # 3. PATH Construction
