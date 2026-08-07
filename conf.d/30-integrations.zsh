@@ -12,6 +12,19 @@ if command_is_available zoxide; then
     }
 fi
 
+if command_is_available mise; then
+    () {
+        local cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/mise_init.zsh"
+
+        if [[ ! -f "$cache" ]]; then
+            mkdir -p "${cache:h}"
+            mise activate zsh >! "$cache"
+        fi
+
+        source "$cache"
+    }
+fi
+
 # Completion Options
 setopt glob_dots
 
