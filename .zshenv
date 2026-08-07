@@ -1,16 +1,12 @@
 # ~/.config/zsh/.zshenv - Global Environment & PATH Configuration
 
-# ------------------------------------------------------------------------------
-# 1. XDG Base Directory Specification
-# ------------------------------------------------------------------------------
+# XDG Base Directory Specification
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# ------------------------------------------------------------------------------
-# 2. CLI & Language Environment Configurations
-# ------------------------------------------------------------------------------
+# CLI & Language Environment Configurations
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export GOPATH="$XDG_DATA_HOME/go"
@@ -22,21 +18,18 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"         # ~/.config/zsh/conf.d/10-env-tools.zsh will create this file if it doesn't exist
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
-# Xorg configuration redirect
+# Xorg Configuration Redirects
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 
-# GPG TTY configuration for interactive shells
+# GPG TTY Configuration for Interactive Shells
 if [[ -o interactive ]]; then
     export GPG_TTY="${TTY:-$(tty 2>/dev/null)}"
 fi
 
-# ------------------------------------------------------------------------------
-# 3. PATH Construction
-# Rule: User local paths take precedence over system paths; auto-deduplicate (-U)
-# ------------------------------------------------------------------------------
+# System PATH Construction (User local paths take precedence; auto-deduplicated)
 typeset -U path PATH
 path=(
     $HOME/bin(N-/)
