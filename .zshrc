@@ -29,6 +29,12 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 # zsh-autosuggestions Setup
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
+# Load Modular Configurations from conf.d (Lexical Order using N.on)
+for config_file in "${_ZDOTDIR}/conf.d/"*.zsh(N.on); do
+    source "$config_file"
+done
+unset config_file
+
 # ZIM Setup
 ZIM_HOME="${XDG_CACHE_HOME:-$HOME/.cache}/zim"
 ZIM_CONFIG_FILE="${_ZDOTDIR}/.zimrc"
@@ -38,7 +44,7 @@ zstyle ':zim:completion' dumpfile "${XDG_CACHE_HOME:-$HOME/.cache}/zsh_dumpfile"
 zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zcompcache"
 zstyle ':zim' disable-version-check yes
 
-if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+if [[ ! -e "${ZIM_HOME}/zimfw.zsh" ]]; then
     if command_is_available curl; then
         curl -fsSL --create-dirs -o "${ZIM_HOME}/zimfw.zsh" \
             https://fastly.jsdelivr.net/gh/zimfw/zimfw@master/zimfw.zsh
@@ -48,16 +54,10 @@ if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
     fi
 fi
 
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE} ]]; then
+if [[ ! "${ZIM_HOME}/init.zsh" -nt "${ZIM_CONFIG_FILE}" ]]; then
     source "${ZIM_HOME}/zimfw.zsh" init -q
 fi
 
 [[ -f "${ZIM_HOME}/init.zsh" ]] && source "${ZIM_HOME}/init.zsh"
-
-# Load Modular Configurations from conf.d (Lexical Order using N.on)
-for config_file in "${_ZDOTDIR}/conf.d/"*.zsh(N.on); do
-    source "$config_file"
-done
-unset config_file
 
 [[ -f "${_ZDOTDIR}/.p10k.zsh" ]] && source "${_ZDOTDIR}/.p10k.zsh"

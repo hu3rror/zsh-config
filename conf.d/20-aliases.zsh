@@ -1,10 +1,12 @@
 # ~/.config/zsh/conf.d/20-aliases.zsh - Command Aliases & Fallbacks
 
+# Navigation & Basic Aliases
 alias se="sudoedit"
 alias grep='grep --color=auto'
 alias ':q'='exit'
 alias '。。'='..'
 
+# File Listing Aliases (eza / ls)
 if command_is_available eza; then
     alias ls='eza --classify auto'
     alias l='ls --long'
@@ -19,6 +21,7 @@ else
     alias ll='ls -lh'
 fi
 
+# Git Aliases
 if command_is_available git; then
     alias g='git'
     alias ga='git add'
@@ -52,6 +55,7 @@ if command_is_available git; then
     alias gsw='git show'
 fi
 
+# Editor Aliases
 if command_is_available nvim; then
     alias vi='nvim'
     alias v='nvim'
@@ -67,23 +71,8 @@ else
     alias edit='nano'
 fi
 
-# flush zsh init caches
-zsh-flush-cache() {
-  emulate -L zsh
-  setopt LOCAL_OPTIONS NULL_GLOB
-
-  local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
-
-  if (( ${#caches} > 0 )); then
-    rm -f "${caches[@]}"
-    echo "[zsh] Custom init caches flushed."
-  else
-    echo "[zsh] No custom cache files found."
-  fi
-}
-
+# Package Manager & Systemd Aliases
 if command_is_available pacman; then
-    # High-frequency aliases
     alias sp='sudo pacman'
     alias spu='sudo pacman -Syu'
     alias spp='sudo pacman -S'
@@ -92,6 +81,7 @@ fi
 
 command_is_available systemctl && alias sc='systemctl'
 
+# System Open & Display Integration
 if command_is_available xdg-open; then
     if ! command_is_available open; then
         open() {
@@ -112,3 +102,17 @@ if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
     command_is_available nvidia-settings && alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia/settings"
 fi
 
+# Utility Functions
+zsh-flush-cache() {
+    emulate -L zsh
+    setopt LOCAL_OPTIONS NULL_GLOB
+
+    local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
+
+    if (( ${#caches} > 0 )); then
+        rm -f "${caches[@]}"
+        echo "[zsh] Custom init caches flushed."
+    else
+        echo "[zsh] No custom cache files found."
+    fi
+}

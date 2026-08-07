@@ -1,7 +1,6 @@
 # ~/.config/zsh/conf.d/10-env-tools.zsh - Default Tools & Environment Settings
 
-
-#  WSL2 Optimizations
+# WSL2 Optimizations
 if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop || -n "$WSL_DISTRO_NAME" ]]; then
     # Hardware accelerated rendering (d3d12)
     if [[ -f /usr/lib/dri/d3d12_dri.so || -f /usr/lib/x86_64-linux-gnu/dri/d3d12_dri.so ]]; then
@@ -9,8 +8,8 @@ if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop || -n "$WSL_DISTRO_NAME" ]]; then
         export LIBVA_DRIVER_NAME=d3d12
     fi
 
-    # (Optional) libedit hint for Intel GPU fallback
-    if [ ! -f /usr/lib/libedit.so.2 ] && [ -f /usr/lib/libedit.so ]; then
+    # Libedit hint for Intel GPU fallback
+    if [[ ! -f /usr/lib/libedit.so.2 && -f /usr/lib/libedit.so ]]; then
         echo "Hint: If OpenGL uses llvmpipe on Intel GPU, create symlink:"
         echo "  sudo ln -s /usr/lib/libedit.so /usr/lib/libedit.so.2"
     fi
@@ -21,23 +20,14 @@ if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop || -n "$WSL_DISTRO_NAME" ]]; then
     fi
 fi
 
-# Default Tools & Environment Settings
+# Default Pager
 if command_is_available bat; then
     export PAGER="bat"
 elif command_is_available less; then
     export PAGER="less"
 fi
 
-if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
-    if command_is_available firefox-developer-edition; then
-        export BROWSER=firefox-developer-edition
-    elif command_is_available firefox; then
-        export BROWSER=firefox
-    elif command_is_available chromium; then
-        export BROWSER=chromium
-    fi
-fi
-
+# Default Editor & Visual Pager
 if command_is_available nvim; then
     export EDITOR="nvim"
     export VISUAL="nvim"
@@ -50,7 +40,18 @@ else
     export VISUAL="nano"
 fi
 
-# Load fzf zsh integration if available (cached for speed)
+# Default Browser
+if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
+    if command_is_available firefox-developer-edition; then
+        export BROWSER="firefox-developer-edition"
+    elif command_is_available firefox; then
+        export BROWSER="firefox"
+    elif command_is_available chromium; then
+        export BROWSER="chromium"
+    fi
+fi
+
+# FZF Configuration & Integration
 if command_is_available fzf; then
     if command_is_available fd; then
         export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden --strip-cwd-prefix --exclude={.git,.idea,.sass-cache,node_modules,build}"
@@ -73,7 +74,7 @@ if command_is_available fzf; then
     }
 fi
 
-# Wget configuration redirect
+# Wget Configuration Redirect
 if [[ ! -f "$WGETRC" ]]; then
     mkdir -p "${WGETRC:h}"
     echo "hsts-file = $XDG_CACHE_HOME/wget-hsts" > "$WGETRC"
