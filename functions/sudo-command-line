@@ -1,14 +1,16 @@
-# Autoload ZLE widget: sudo-command-line
-# Prepends 'sudo' to the current command line buffer upon pressing ESC+ESC
+# ~/.config/zsh/functions/sudo-command-line - Toggle sudo in ZLE Buffer
 
 emulate -L zsh
-if [[ -z $BUFFER ]]; then
+
+if [[ -z "$BUFFER" ]]; then
     zle up-history
     return
 fi
-if [[ $BUFFER == sudo\ * ]]; then
+
+if [[ "$BUFFER" == sudo\ * ]]; then
     BUFFER="${BUFFER#sudo }"
 else
     BUFFER="sudo $BUFFER"
 fi
+
 zle end-of-line

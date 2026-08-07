@@ -1,12 +1,11 @@
-# Autoload function: extract
-# Automatically extracts various archive formats
+# ~/.config/zsh/functions/extract - Archive Extraction Helper
 
 emulate -L zsh
 
 local file
 
 for file; do
-    [[ -f $file ]] || {
+    [[ -f "$file" ]] || {
         print -u2 "extract: $file: not found"
         continue
     }
