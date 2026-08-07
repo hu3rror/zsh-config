@@ -41,19 +41,22 @@ HISTSIZE=10000
 SAVEHIST=20000
 
 # History Substring Search Keybindings
-zmodload -F zsh/terminfo +p:terminfo
-local -a key_up=('^[[A' '^P')
-local -a key_down=('^[[B' '^N')
-[[ -n "${terminfo[kcuu1]}" ]] && key_up+=("${terminfo[kcuu1]}")
-[[ -n "${terminfo[kcud1]}" ]] && key_down+=("${terminfo[kcud1]}")
+() {
+    zmodload -F zsh/terminfo +p:terminfo
+    local -a key_up=('^[[A' '^P')
+    local -a key_down=('^[[B' '^N')
+    local key
 
-for key in "${key_up[@]}"; do
-    bindkey "${key}" history-substring-search-up
-done
-for key in "${key_down[@]}"; do
-    bindkey "${key}" history-substring-search-down
-done
-unset key key_up key_down
+    [[ -n "${terminfo[kcuu1]}" ]] && key_up+=("${terminfo[kcuu1]}")
+    [[ -n "${terminfo[kcud1]}" ]] && key_down+=("${terminfo[kcud1]}")
+
+    for key in "${key_up[@]}"; do
+        bindkey "${key}" history-substring-search-up
+    done
+    for key in "${key_down[@]}"; do
+        bindkey "${key}" history-substring-search-down
+    done
+}
 
 # Syntax Highlighting Custom Styles
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1'
