@@ -36,10 +36,12 @@ path=(
     $HOME/.local/bin(N-/)
     ${CARGO_HOME:-$XDG_DATA_HOME/cargo}/bin(N-/)
     $HOME/.fly/bin(N-/)
-    /mnt/g/Program\ Files/Microsoft\ VS\ Code/bin(N-/)
     /usr/local/bin(N-/)
     /usr/bin(N-/)
     /bin(N-/)
+    /mnt/g/Program\ Files/Microsoft\ VS\ Code/bin(N-/)
+    /mnt/c/Windows/system32(N-/)
+    /mnt/c/Windows(N-/)
     $path
 )
 export PATH
