@@ -18,6 +18,7 @@ setopt no_case_glob
 setopt no_nomatch
 setopt extended_glob
 setopt interactive_comments
+setopt glob_dots
 
 # General Shell Behavior
 setopt no_clobber
@@ -39,24 +40,6 @@ HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/.zsh_history"
 [[ ! -f "$HISTFILE" ]] && mkdir -p "${HISTFILE:h}"
 HISTSIZE=10000
 SAVEHIST=20000
-
-# History Substring Search Keybindings
-() {
-    zmodload -F zsh/terminfo +p:terminfo
-    local -a key_up=('^[[A' '^P')
-    local -a key_down=('^[[B' '^N')
-    local key
-
-    [[ -n "${terminfo[kcuu1]}" ]] && key_up+=("${terminfo[kcuu1]}")
-    [[ -n "${terminfo[kcud1]}" ]] && key_down+=("${terminfo[kcud1]}")
-
-    for key in "${key_up[@]}"; do
-        bindkey "${key}" history-substring-search-up
-    done
-    for key in "${key_down[@]}"; do
-        bindkey "${key}" history-substring-search-down
-    done
-}
 
 # Syntax Highlighting Custom Styles (Catppuccin Mocha)
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1,bold'

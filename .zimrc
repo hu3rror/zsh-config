@@ -1,16 +1,6 @@
-# ===================================================================================================
-# Load order (strict) / 加载顺序（严格）：
-# [1] Core & Theme              / 核心与主题
-# [2] Completion Sources        / 补全库
-# [3] Completion Initialization / 补全初始化
-# [4] Completion UI             / 补全界面
-# [5] ZLE Enhancements          / ZLE交互增强
-# [6] Syntax Highlighting       / 语法高亮（load last / 最后加载）
-# ===================================================================================================
-
-
-# --- [1] Core & Theme / 核心与主题 ---
+# --- [1] Modules & Prompt / 核心与主题 ---
 zmodule input                                      # Enhanced input / 输入增强
+zmodule fzf                                        # Fzf
 zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示符主题
 
 

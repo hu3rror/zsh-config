@@ -29,30 +29,22 @@ if command_is_available git; then
     alias gb='git branch'
     alias gc='git commit'
     alias gca='git commit --amend'
-    alias gcl='git clone'
-    alias gcld='git clone --depth=1'
-    alias gcm='git commit --message'
-    alias gcma='git commit --all --message'
-    alias gcn='git clean -f -d'
+    alias gcfd='git clean -f -d'
     alias gco='git checkout'
     alias gd='git diff'
-    alias gf='git fetch --all'
-    alias gfp='git fetch --all --prune'
-    alias gl='git log --oneline --decorate --graph --all'
-    alias gll="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all"
-    alias glll="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat"
+    alias gfa='git fetch --all'
+    alias glog='git log --oneline --decorate --graph --all'
+    alias glogg="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all"
+    alias gloggg="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat"
     alias gp='git push'
     alias gpf='git push --force'
-    alias gpl='git pull'
-    alias gplr='git pull --rebase'
-    alias gpls='git pull --autostash'
+    alias gl='git pull'
+    alias glr='git pull --rebase'
     alias gr='git reset'
     alias grh='git reset --hard'
-    alias grm='git rm'
-    alias grmc='git rm --cached'
     alias grs='git restore'
     alias gs='git status --short --branch --untracked-files --find-renames'
-    alias gsw='git show'
+    alias gsh='git show'
 fi
 
 # Editor Aliases
@@ -74,8 +66,7 @@ fi
 # Package Manager & Systemd Aliases
 if command_is_available pacman; then
     alias sp='sudo pacman'
-    alias spu='sudo pacman -Syu'
-    alias spp='sudo pacman -S'
+    alias spp='sudo pacman -Syu'
     command_is_available paru && alias p="paru"
 fi
 
@@ -100,15 +91,10 @@ if command_is_available xdg-open; then
     fi
 fi
 
-if [[ -n "$DISPLAY" && -z "$SSH_CONNECTION" ]]; then
-    command_is_available nvidia-settings && alias nvidia-settings="nvidia-settings --config=$XDG_CONFIG_HOME/nvidia/settings"
-fi
-
 # Utility Functions
 zsh-flush-cache() {
     emulate -L zsh
     setopt LOCAL_OPTIONS NULL_GLOB
-
     local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
 
     if (( ${#caches} > 0 )); then
