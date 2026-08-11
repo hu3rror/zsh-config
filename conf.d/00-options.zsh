@@ -35,7 +35,7 @@ setopt hist_verify
 setopt share_history
 
 # History File Configuration
-HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/histfile"
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/.zsh_history"
 [[ ! -f "$HISTFILE" ]] && mkdir -p "${HISTFILE:h}"
 HISTSIZE=10000
 SAVEHIST=20000
