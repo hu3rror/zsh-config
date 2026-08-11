@@ -2,6 +2,7 @@
 zmodule input                                      # Enhanced input / 输入增强
 zmodule fzf                                        # Fzf
 zmodule hu3rror/zim-zoxide                         # zoxide
+zmodule hu3rror/zim-mise                           # mise
 zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示符主题
 
 

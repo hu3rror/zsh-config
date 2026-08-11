@@ -1,18 +1,5 @@
 # ~/.config/zsh/conf.d/30-integrations.zsh - External Tool Integrations
 
-if command_is_available mise; then
-    () {
-        local cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/mise_init.zsh"
-
-        if [[ ! -f "$cache" ]]; then
-            mkdir -p "${cache:h}"
-            mise activate zsh >! "$cache"
-        fi
-
-        source "$cache"
-    }
-fi
-
 # # Fzf-Tab Configurations
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*' file-sort modification
