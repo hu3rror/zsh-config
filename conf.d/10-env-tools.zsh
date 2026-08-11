@@ -76,6 +76,7 @@ if command_is_available fzf; then
 fi
 
 # Wget Configuration Redirect
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 if [[ ! -f "$WGETRC" ]]; then
     mkdir -p "${WGETRC:h}"
     echo "hsts-file = $XDG_CACHE_HOME/wget-hsts" > "$WGETRC"
