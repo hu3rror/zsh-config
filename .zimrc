@@ -20,7 +20,7 @@ zmodule Aloxaf/fzf-tab                             # Fuzzy completion UI (requir
 
 # --- [5] ZLE Enhancements / ZLE交互增强 ---
 zmodule zsh-users/zsh-autosuggestions               # Command autosuggestions / 命令自动建议
-zmodule zsh-users/zsh-history-substring-search     # History substring search / 历史命令搜索
+#zmodule zsh-users/zsh-history-substring-search     # History substring search / 历史命令搜索 (性能大户)
 
 
 # --- [6] Syntax Highlighting / 语法高亮 ---
