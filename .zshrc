@@ -22,9 +22,6 @@ autoload -Uz extract sudo-command-line pac
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
-# Aliases for Autoload Functions
-alias x='extract'
-
 # zsh-autosuggestions Setup
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 

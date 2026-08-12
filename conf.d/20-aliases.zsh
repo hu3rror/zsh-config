@@ -6,6 +6,9 @@ alias grep='grep --color=auto'
 alias ':q'='exit'
 alias '。。'='..'
 
+# Aliases for Autoload Functions
+alias x='extract'
+
 # File Listing Aliases (eza / ls)
 if command_is_available eza; then
     alias ls='eza --classify auto'
