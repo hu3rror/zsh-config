@@ -11,10 +11,15 @@
 | Prefix | File | Responsibility |
 |--------|------|---------------|
 | `00-` | `util.zsh` | Utility functions (`command_is_available`) |
+| `05-` | `wsl2.zsh` | WSL2-specific env (d3d12, ssh-agent); self-guards, no-op elsewhere |
 | `10-` | `options.zsh` | Shell options, keybindings, history, highlighting |
-| `20-` | `env-tools.zsh` | Editor, pager, WSL2 environment |
-| `30-` | `aliases.zsh` | Command aliases, fallbacks, conditional autoload |
+| `20-` | `env-tools.zsh` | Editor, pager defaults |
+| `30-` | `aliases.zsh` | Command aliases, fallbacks |
 | `99-` | `zim.zsh` | Zim framework bootstrap |
+
+**Self-guarding module** — a module that returns early when its environment precondition isn't met, so it is a no-op elsewhere. `05-wsl2.zsh` is the canonical example: on non-WSL systems the whole file is skipped.
+
+## Key concepts
 
 ## Key concepts
 
