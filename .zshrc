@@ -5,13 +5,18 @@
 # Powerlevel10k Instant Prompt Header
 [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]] && source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 
-# Base Environment & Helper Functions
+# Base Environment Variables
 _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
+
+# Helper Functions
+command_is_available() {
+    (( $+commands[$1] ))
+}
 
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("$_ZDOTDIR/functions" $fpath)
-autoload -Uz command_is_available extract sudo-command-line pac
+autoload -Uz extract sudo-command-line pac
 
 # ZLE Widget Bindings
 zle -N sudo-command-line

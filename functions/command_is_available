@@ -1,5 +1,0 @@
-# ~/.config/zsh/functions/command_is_available - Command Availability Check
-
-emulate -L zsh
-
-(( $+commands[$1] ))
