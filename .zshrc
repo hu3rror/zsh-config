@@ -8,15 +8,10 @@
 # Base Environment Variables
 _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 
-# Command Existence Check
-command_is_available() {
-    (( $+commands[$1] ))
-}
-
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("$_ZDOTDIR/functions" $fpath)
-autoload -Uz extract sudo-command-line pac open
+autoload -Uz command_is_available extract sudo-command-line pac open 
 
 # ZLE Widget Bindings
 zle -N sudo-command-line
