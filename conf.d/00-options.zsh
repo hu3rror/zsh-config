@@ -41,6 +41,10 @@ HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=20000
 
+# zsh-syntax-highlighting Setup
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
 # Syntax Highlighting Custom Styles (Catppuccin Mocha)
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1,bold'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#a6e3a1,italic'

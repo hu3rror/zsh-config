@@ -26,10 +26,6 @@ bindkey "\e\e" sudo-command-line
 # Aliases for Autoload Functions
 alias x='extract'
 
-# zsh-syntax-highlighting Setup
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
 # zsh-autosuggestions Setup
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
