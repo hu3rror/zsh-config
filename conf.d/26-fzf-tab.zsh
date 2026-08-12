@@ -13,4 +13,6 @@ zstyle ':fzf-tab:*:*argument-rest*' popup-pad 100 0
 
 if command_is_available eza; then
     zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 -a --color=always $realpath'
+else
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 -F "$realpath"'
 fi

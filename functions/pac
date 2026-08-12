@@ -155,6 +155,11 @@ case "$action" in
         ;;
 
     clean)
-        sudo pacman -Sc
+        if (( $+commands[paccache] )); then
+            print -P "%F{yellow}[info]%f Cleaning package cache, keeping latest 3 versions..."
+            sudo paccache -r
+        else
+            sudo pacman -Sc
+        fi
         ;;
 esac
