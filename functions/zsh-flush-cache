@@ -1,0 +1,13 @@
+# ~/.config/zsh/functions/zsh-flush-cache - Flush Zsh Init Caches
+
+emulate -L zsh
+setopt LOCAL_OPTIONS NULL_GLOB
+
+local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
+
+if (( ${#caches} > 0 )); then
+    rm -f "${caches[@]}"
+    echo "[zsh] Custom init caches flushed."
+else
+    echo "[zsh] No custom cache files found."
+fi

@@ -1,0 +1,14 @@
+# ~/.config/zsh/functions/open - Open files/directories using xdg-open
+
+emulate -L zsh
+
+local arg
+
+if (( $# == 0 )); then
+    xdg-open . >/dev/null 2>&1 &!
+    return
+fi
+
+for arg in "$@"; do
+    xdg-open "$arg" >/dev/null 2>&1 &!
+done

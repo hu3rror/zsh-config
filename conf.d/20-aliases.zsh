@@ -75,32 +75,6 @@ command_is_available systemctl && alias sc='systemctl'
 # System Open & Display Integration
 if command_is_available xdg-open; then
     if ! command_is_available open; then
-        open() {
-            emulate -L zsh
-            local arg
-
-            if (( $# == 0 )); then
-                xdg-open . >/dev/null 2>&1 &!
-                return
-            fi
-
-            for arg in "$@"; do
-                xdg-open "$arg" >/dev/null 2>&1 &!
-            done
-        }
+        autoload -Uz open
     fi
 fi
-
-# Utility Functions
-zsh-flush-cache() {
-    emulate -L zsh
-    setopt LOCAL_OPTIONS NULL_GLOB
-    local caches=("${XDG_CACHE_HOME:-$HOME/.cache}/zsh/"*.zsh)
-
-    if (( ${#caches} > 0 )); then
-        rm -f "${caches[@]}"
-        echo "[zsh] Custom init caches flushed."
-    else
-        echo "[zsh] No custom cache files found."
-    fi
-}
