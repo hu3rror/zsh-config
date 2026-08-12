@@ -23,9 +23,3 @@ fi
 if command_is_available wsl2-ssh-agent && [[ -z "$SSH_AUTH_SOCK" || ! -S "$SSH_AUTH_SOCK" ]]; then
     eval "$(wsl2-ssh-agent)"
 fi
-
-path+=(
-    "/mnt/g/Program Files/Microsoft VS Code/bin"(N-/)
-    /mnt/c/Windows/system32(N-/)
-    /mnt/c/Windows(N-/)
-)
