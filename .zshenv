@@ -31,9 +31,9 @@ path=(
     $HOME/.local/bin(N-/)
     $CARGO_HOME/bin(N-/)
     $HOME/.fly/bin(N-/)
-    "/mnt/g/Program Files/Microsoft VS Code/bin"
-    "/mnt/c/Windows/system32"
-    "/mnt/c/Windows"
+    "/mnt/g/Program Files/Microsoft VS Code/bin"(N-/)
+    "/mnt/c/Windows/system32"(N-/)
+    "/mnt/c/Windows"(N-/)
     $path
 )
 export PATH
