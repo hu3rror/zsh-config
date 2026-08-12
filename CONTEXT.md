@@ -12,7 +12,10 @@
 |--------|------|---------------|
 | `00-` | `util.zsh` | Utility functions (`command_is_available`) |
 | `05-` | `wsl2.zsh` | WSL2-specific env (d3d12, ssh-agent); self-guards, no-op elsewhere |
-| `10-` | `options.zsh` | Shell options, keybindings, history, highlighting |
+| `10-` | `options.zsh` | Shell options, keybindings |
+| `12-` | `history.zsh` | History options & file storage |
+| `14-` | `syntax-highlight.zsh` | zsh-syntax-highlighting styles |
+| `16-` | `fzf-tab.zsh` | Fzf-tab completion UI |
 | `20-` | `env-tools.zsh` | Editor, pager defaults |
 | `30-` | `aliases.zsh` | Command aliases, fallbacks |
 | `99-` | `zim.zsh` | Zim framework bootstrap |
