@@ -2,18 +2,22 @@
 
 emulate -L zsh
 
-if ! command_is_available xdg-open; then
-    print -u2 "open: xdg-open is not available — install xdg-utils"
+local open_cmd
+if (( $+commands[xdg-open] )); then
+    open_cmd="xdg-open"
+elif (( $+commands[open] )); then
+    open_cmd="open"
+else
+    print -u2 "open: Neither xdg-open nor open is available."
     return 1
 fi
 
 local arg
-
 if (( $# == 0 )); then
-    xdg-open . >/dev/null 2>&1 &!
+    $open_cmd . >/dev/null 2>&1 &!
     return
 fi
 
 for arg in "$@"; do
-    xdg-open "$arg" >/dev/null 2>&1 &!
+    $open_cmd "$arg" >/dev/null 2>&1 &!
 done
