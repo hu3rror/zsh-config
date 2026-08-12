@@ -74,10 +74,3 @@ if command_is_available pacman; then
 fi
 
 command_is_available systemctl && alias sc='systemctl'
-
-# System Open & Display Integration
-if command_is_available xdg-open; then
-    if ! command_is_available open; then
-        autoload -Uz open
-    fi
-fi

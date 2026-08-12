@@ -19,5 +19,6 @@
 ## Key concepts
 
 - **command_is_available** — a predicate function `(( $+commands[$1] ))` used by all modules to conditionally enable features. Defined once in `conf.d/00-util.zsh`.
-- **Autoloaded functions** — `extract`, `sudo-command-line`, `pac` live in `functions/` and are loaded on first invocation. They depend on `command_is_available` being already defined.
-  - **Lazy-load ordering** — `.zshrc` registers these in `$fpath`/`autoload` *before* the `conf.d/` loop runs, but registration does not execute the body. `extract` and `pac` call `command_is_available` only at first invocation, by which point `00-util.zsh` has been sourced. `sudo-command-line` and `open` do not call it.
+- **Autoloaded functions** — `extract`, `sudo-command-line`, `pac`, `open` live in `functions/` and are loaded on first invocation (unconditional registration in `.zshrc`). They depend on `command_is_available` being already defined.
+  - **Lazy-load ordering** — `.zshrc` registers these in `$fpath`/`autoload` *before* the `conf.d/` loop runs, but registration does not execute the body. `extract` and `pac` call `command_is_available` only at first invocation, by which point `00-util.zsh` has been sourced. `sudo-command-line` does not call it.
+  - **`open` preconditions** — `open` guards its own `xdg-open` dependency at runtime (checks `command_is_available xdg-open` on first call). Registration is unconditional; the function self-guards.

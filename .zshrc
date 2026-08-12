@@ -11,7 +11,7 @@ _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("$_ZDOTDIR/functions" $fpath)
-autoload -Uz extract sudo-command-line pac
+autoload -Uz extract sudo-command-line pac open
 
 # ZLE Widget Bindings
 zle -N sudo-command-line
