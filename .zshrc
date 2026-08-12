@@ -10,14 +10,10 @@ fi
 # Base Environment & Helper Functions
 _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 
-command_is_available() {
-    (( $+commands[$1] ))
-}
-
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("${_ZDOTDIR}/functions" $fpath)
-autoload -Uz extract sudo-command-line pac
+autoload -Uz command_is_available extract sudo-command-line pac
 
 # ZLE Widget Bindings
 zle -N sudo-command-line
