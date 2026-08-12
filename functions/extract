@@ -12,9 +12,9 @@ for file; do
 
     case ${file:l} in
         (*.rar)
-            if command_is_available unar; then
+            if (( $+commands[unar] )); then
                 unar "$file"
-            elif command_is_available unrar; then
+            elif (( $+commands[unrar] )); then
                 unrar x -- "$file"
             else
                 print -u2 "RAR support missing: install 'unar' (e.g. pacman -S unar)"
@@ -22,7 +22,7 @@ for file; do
             ;;
 
         (*.7z)
-            if command_is_available 7z; then
+            if (( $+commands[7z] )); then
                 7z x -- "$file"
             else
                 print -u2 "7z support missing: install '7zip' (e.g. pacman -S 7zip)"
