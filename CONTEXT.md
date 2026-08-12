@@ -1,10 +1,35 @@
 # Zsh Configuration — Domain Model
 
+## Bootstrap chain
+
+This config lives in `~/.config/zsh/` but depends on a **one-liner in `~/.zshenv`** to redirect `ZDOTDIR`:
+
+```zsh
+# ~/.zshenv (the only file outside this directory)
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+[[ -f "$ZDOTDIR/.zshenv" ]] && source "$ZDOTDIR/.zshenv"
+```
+
+Without this file, zsh reads its default `~/.zshrc` and never finds this config.
+
+### Full bootstrap sequence
+
+| Step | File | What happens |
+|------|------|-------------|
+| 1 | `~/.zshenv` | Zsh starts, reads `~/.zshenv` (default `ZDOTDIR` = `~`). Sets `ZDOTDIR` to `~/.config/zsh`, then sources `~/.config/zsh/.zshenv`. |
+| 2 | `.zshenv` | Sets XDG env vars, constructs `PATH` (Linux + WSL paths), exports `GPG_TTY`. |
+| 3 | `.zshrc` | Defines `command_is_available`, sets up `fpath` and autoload, registers ZLE widgets, then sources `conf.d/` files in lexical order. |
+| 4 | `conf.d/` | Modular config files: shell options, history, highlighting, aliases, and finally Zim framework bootstrap. |
+
 ## Architecture
 
-**Orchestrator** — `.zshrc` owns the bootstrap sequence: defines `command_is_available`, sets up autoload paths and ZLE widget bindings, then sources `conf.d/` files in lexical order. It is the single entry point for all configuration.
+**Orchestrator** — `.zshrc` owns the bootstrap sequence: defines `command_is_available`, sets up autoload paths and ZLE widget bindings, then sources `conf.d/` files in lexical order. It is the single entry point for all configuration **within this directory**.
 
 **Self-guarding module** — a module that returns early when its environment precondition is not met, so it is a no-op elsewhere. `10-wsl2.zsh` is the canonical example: on non-WSL systems the whole file is skipped.
+
+## External dependency
+
+- **`~/.zshenv`** — the only file outside `~/.config/zsh/`. Required for `ZDOTDIR` redirection. If someone clones this repo, they **must** create this file or the config won't load.
 
 ## Module taxonomy
 
