@@ -10,8 +10,8 @@ _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 
 # Autoload Functions Setup
 typeset -U fpath
-fpath=("${_ZDOTDIR}/functions" $fpath)
-autoload -Uz command_is_available extract sudo-command-line pac zsh-flush-cache
+fpath=("$_ZDOTDIR/functions" $fpath)
+autoload -Uz command_is_available extract sudo-command-line pac
 
 # ZLE Widget Bindings
 zle -N sudo-command-line
@@ -24,10 +24,10 @@ alias x='extract'
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 # Load Modular Configurations from conf.d (Lexical Order using N.on)
-for config_file in "${_ZDOTDIR}/conf.d/"*.zsh(N.on); do
+for config_file in "$_ZDOTDIR/conf.d/"*.zsh(N.on); do
     source "$config_file"
 done
 unset config_file
 
 # Powerlevel10k Theme Configuration
-[[ -f "${_ZDOTDIR}/.p10k.zsh" ]] && source "${_ZDOTDIR}/.p10k.zsh"
+[[ -f "$_ZDOTDIR/.p10k.zsh" ]] && source "$_ZDOTDIR/.p10k.zsh"
