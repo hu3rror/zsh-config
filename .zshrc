@@ -8,6 +8,11 @@
 # Base Environment Variables
 _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 
+# Command Existence Check
+command_is_available() {
+    (( $+commands[$1] ))
+}
+
 # Autoload Functions Setup
 typeset -U fpath
 fpath=("$_ZDOTDIR/functions" $fpath)
