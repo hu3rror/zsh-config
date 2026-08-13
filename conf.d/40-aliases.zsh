@@ -41,8 +41,8 @@ if command_is_available git; then
     alias gloggg="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat"
     alias gp='git push'
     alias gpf='git push --force'
-    alias gl='git pull'
-    alias glr='git pull --rebase'
+    alias gpl='git pull'
+    alias gplr='git pull --rebase'
     alias gr='git reset'
     alias grh='git reset --hard'
     alias grs='git restore'
