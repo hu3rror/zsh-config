@@ -1,3 +1,4 @@
+# --- 核心与补全初始化 ---
 zmodule input
 zmodule fzf
 # compinit 必须最先加载：mise 等模块可能在 compdef 缺失时提前触发 compinit，导致启动警告（详见 CONTEXT.md 的 Zim 模块排序约束）
@@ -6,10 +7,14 @@ zmodule hu3rror/zim-zoxide
 zmodule hu3rror/zim-mise
 zmodule romkatv/powerlevel10k --use degit
 
+# --- 补全库 ---
 zmodule zsh-users/zsh-completions --fpath src
 
+# --- 补全界面 ---
 zmodule Aloxaf/fzf-tab
 
+# --- ZLE 交互增强 ---
 zmodule zsh-users/zsh-autosuggestions
 
+# --- 语法高亮 ---
 zmodule zsh-users/zsh-syntax-highlighting
