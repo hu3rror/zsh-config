@@ -1,0 +1,20 @@
+emulate -L zsh
+
+local zimrc_path="$1"
+local zdotdir="${2:-$ZDOTDIR}"
+
+local completion_line=0 mise_line=0 n=0 line
+local -a zimrc_lines=()
+[[ -r "$zimrc_path" ]] && zimrc_lines=("${(@f)$(< "$zimrc_path")}")
+for line in "${zimrc_lines[@]}"; do
+    (( ++n ))
+    [[ $line == 'zmodule completion'* ]] && completion_line=$n
+    [[ $line == 'zmodule hu3rror/zim-mise'* ]] && mise_line=$n
+done
+if (( mise_line > 0 && (completion_line == 0 || completion_line > mise_line) )); then
+    print -u2 -P "%F{red}[error]%f .zimrc: 'zmodule completion' must precede 'zmodule hu3rror/zim-mise' — mise injects compinit into its activation output, causing a duplicate-compinit warning. Move 'zmodule completion' above it. See CONTEXT.md → Zim module ordering constraints."
+fi
+
+if [[ -f "$zdotdir/.zcompdump" ]]; then
+    print -u2 -P "%F{red}[error]%f $zdotdir/.zcompdump exists — some activation script ran compinit without -d (ordering violation or a new tool-activation module). Delete it and check .zimrc order. See CONTEXT.md → Zim module ordering constraints."
+fi

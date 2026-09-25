@@ -83,7 +83,9 @@ Zim downloads its modules on first run.
 │   ├── extract
 │   ├── open
 │   ├── pac
-│   └── sudo-command-line
+│   ├── sudo-command-line
+│   └── zim-bootstrap-check  # Zim bootstrap order guard (internal)
+├── tests/          # Guard regression suite (zsh tests/run.zsh)
 └── CONTEXT.md       # Architecture documentation (agent-facing)
 ```
 

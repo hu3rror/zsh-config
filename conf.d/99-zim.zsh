@@ -1,6 +1,8 @@
 ZIM_HOME="$XDG_CACHE_HOME/zim"
 ZIM_CONFIG_FILE="$_ZDOTDIR/.zimrc"
 
+zim-bootstrap-check "$ZIM_CONFIG_FILE" "$_ZDOTDIR"
+
 zstyle ':zim:zmodule' use 'degit'
 zstyle ':zim:completion' dumpfile "$XDG_CACHE_HOME/zsh_dumpfile"
 zstyle ':completion::complete:*' cache-path "$XDG_CACHE_HOME/zcompcache"

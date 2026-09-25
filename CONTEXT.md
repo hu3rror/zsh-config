@@ -51,13 +51,15 @@ Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves roo
 ## Key concepts
 
 - **command_is_available** — a predicate function `(( $+commands[$1] ))` used by all modules and autoloaded functions to conditionally enable features. Defined once in `conf.d/00-util.zsh` (the utility tier, sourced first), available to everything that runs later. Semantics: probes PATH executables only — builtins, aliases and functions are not matched.
-- **Autoloaded functions** — `extract`, `sudo-command-line`, `pac`, `open` live in `functions/` and are loaded on first invocation (unconditional registration in `.zshrc`).
+- **Autoloaded functions** — `extract`, `sudo-command-line`, `pac`, `open` and the internal guard `zim-bootstrap-check` live in `functions/` and are loaded on first invocation (unconditional registration in `.zshrc`).
   - **Lazy-load ordering** — `.zshrc` registers these in `$fpath`/`autoload` *before* the `conf.d/` loop runs, but registration does not execute the body. The function body runs only on first call, by which point `command_is_available` is already defined; `extract`, `open` and `pac` route all availability checks through it.
   - **`open` preconditions** — `open` guards its own `xdg-open` dependency at runtime (checks `command_is_available xdg-open` on first call). Registration is unconditional; the function self-guards.
 
 ## Zim module ordering constraints
 
 `.zimrc` order is load-bearing: the `completion` module (compinit) must load **before** any module whose activation may trigger compinit/compdef. Keep `zmodule completion` early (currently right after `fzf`) and place any new tool-activation module **after** it.
+
+`zim-bootstrap-check` (called first by `99-zim.zsh`) validates this at bootstrap: it prints a red `[error]` when `zmodule completion` does not precede `zmodule hu3rror/zim-mise`, or when `completion` is missing. The check's denylist is mise-only — extend it when a new tool-activation module is added. It also warns when `$ZDOTDIR/.zcompdump` reappears — the compinit-without-`-d` signature that catches *any* premature compinit, not just mise.
 
 **Why (2026-09 incident).** `hu3rror/zim-mise` sources `mise hook-env` output during activation. Newer mise versions inject usage-completion registration into that output:
 
@@ -67,7 +69,7 @@ if ! (( $+functions[compdef] )); then autoload -Uz compinit; compinit -i; fi
 
 With mise loading before `completion`, compinit ran early; the completion module then printed `warning: completion was already initialized ...` on every startup. That warning is console output during init, which also tripped Powerlevel10k's instant-prompt warning. Fix: move `zmodule completion` ahead of `zim-mise` (2026-09-25). Side benefit: compinit now runs exactly once, with the full fpath in place.
 
-**Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again.
+**Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again — `zim-bootstrap-check` flags it at bootstrap.
 
 **Disabled module.** `zsh-history-substring-search` is intentionally left commented out in `.zimrc`: it is a performance heavyweight (性能大户). Re-enable by uncommenting when the trade-off is acceptable.
 

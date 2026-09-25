@@ -83,7 +83,9 @@ exec zsh
 │   ├── extract
 │   ├── open
 │   ├── pac
-│   └── sudo-command-line
+│   ├── sudo-command-line
+│   └── zim-bootstrap-check  # Zim 引导顺序守卫（内部）
+├── tests/          # 守卫回归测试（zsh tests/run.zsh）
 └── CONTEXT.md       # 架构文档（面向 AI agent）
 ```
 
