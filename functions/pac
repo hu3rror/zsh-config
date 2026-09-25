@@ -55,7 +55,7 @@ case "$action" in
         fi
 
         if [[ -n "${pkgs[*]}" ]]; then
-            print -P "%F{cyan}Selected packages for installation:%f\n${(j:\n:)pkgs}"
+            print -P "%F{cyan}Selected packages for installation:%f\n${(F)pkgs}"
             read -r "confirm?Proceed with installation? [Y/n] "
             if [[ -z "$confirm" || "$confirm" =~ ^[Yy]$ ]]; then
                 if [[ "$helper" == "paru" ]]; then
@@ -71,7 +71,7 @@ case "$action" in
         selected=$(pacman -Qq | fzf --multi --preview 'pacman -Qi {}' --prompt="Select packages to uninstall > ")
         if [[ -n "$selected" ]]; then
             pkgs=(${(f)selected})
-            print -P "%F{yellow}Selected packages for removal:%f\n${(j:\n:)pkgs}"
+            print -P "%F{yellow}Selected packages for removal:%f\n${(F)pkgs}"
             print -P "%F{yellow}[note]%f Recursive mode (-Rns) removes unneeded dependencies; Safe mode (-R) removes packages only."
             read -r "mode?Choose removal mode [1: -Rns (default), 2: -R (safe), c: cancel]: "
             case "$mode" in
@@ -92,7 +92,7 @@ case "$action" in
         orphans_str=$(pacman -Qtdq)
         if [[ -n "$orphans_str" ]]; then
             orphans=(${(f)orphans_str})
-            print -P "%F{yellow}Found orphan packages:%f\n${(j:\n:)orphans}"
+            print -P "%F{yellow}Found orphan packages:%f\n${(F)orphans}"
             read -r "confirm?Uninstall these orphan packages (-Rns)? [Y/n] "
             if [[ -z "$confirm" || "$confirm" =~ ^[Yy]$ ]]; then
                 sudo pacman -Rns "${orphans[@]}"
