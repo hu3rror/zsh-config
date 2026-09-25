@@ -46,7 +46,7 @@ Without this file, zsh reads its default `~/.zshrc` and never finds this config.
 | `40-` | `aliases.zsh` | Command aliases & fallbacks |
 | `99-` | `zim.zsh` | Zim framework bootstrap |
 
-Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `05-tools` resolves shared tool availability (lexically before its consumers at 26/30/40), `10/20/30/40` are primary tiers, `22/24/26` are sub-concerns within the options tier.
+Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `05-tools` resolves shared tool availability (lexically before its consumers at 26/40), `10/20/30/40` are primary tiers, `22/24/26` are sub-concerns within the options tier.
 
 ## Key concepts
 
@@ -71,7 +71,7 @@ With mise loading before `completion`, compinit ran early; the completion module
 
 **Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again — `zim-bootstrap-check` flags it at bootstrap.
 
-**Disabled module.** `zsh-history-substring-search` is intentionally left commented out in `.zimrc`: it is a performance heavyweight (性能大户). Re-enable by uncommenting when the trade-off is acceptable.
+**Deliberately excluded module.** `zsh-history-substring-search` is absent from `.zimrc` by choice: it is a performance heavyweight (性能大户). It was removed entirely (not kept as a commented-out line) during the 2026-09 comment cleanup; re-add it only when the trade-off is acceptable.
 
 ## Tool selection
 
