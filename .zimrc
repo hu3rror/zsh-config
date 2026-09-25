@@ -1,6 +1,12 @@
-# --- [1] Modules & Prompt / 核心与主题 ---
+# --- [1] Core & Completion Initialization / 核心与补全初始化 ---
 zmodule input                                      # Enhanced input / 输入增强
 zmodule fzf                                        # Fzf
+# compinit must load BEFORE any module that may trigger it. mise's
+# hook-env output runs `compinit -i` when compdef is missing; if it runs
+# first, the completion module below prints a "completion was already
+# initialized" warning on every startup.
+# compinit 必须先于可能触发它的模块（mise 的 hook-env 会在 compdef 缺失时调用 compinit）
+zmodule completion                                 # Initialize completion system (compinit) / 初始化补全系统
 zmodule hu3rror/zim-zoxide                         # zoxide
 zmodule hu3rror/zim-mise                           # mise
 zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示符主题
@@ -10,11 +16,7 @@ zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示
 zmodule zsh-users/zsh-completions --fpath src      # Additional completion definitions / 补充补全定义
 
 
-# --- [3] Completion Initialization / 补全初始化 ---
-zmodule completion                                 # Initialize completion system (compinit) / 初始化补全系统
-
-
-# --- [4] Completion UI / 补全界面 ---
+# --- [3] Completion UI / 补全界面 ---
 zmodule Aloxaf/fzf-tab                             # Fuzzy completion UI (requires compinit) / 模糊补全界面（依赖 compinit）
 
 

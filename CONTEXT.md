@@ -52,3 +52,17 @@ Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves roo
 - **Autoloaded functions** — `extract`, `sudo-command-line`, `pac`, `open` live in `functions/` and are loaded on first invocation (unconditional registration in `.zshrc`).
   - **Lazy-load ordering** — `.zshrc` registers these in `$fpath`/`autoload` *before* the `conf.d/` loop runs, but registration does not execute the body. The function body runs only on first call, by which point `command_is_available` is already defined.
   - **`open` preconditions** — `open` guards its own `xdg-open` dependency at runtime (checks `command_is_available xdg-open` on first call). Registration is unconditional; the function self-guards.
+
+## Zim module ordering constraints
+
+`.zimrc` order is load-bearing: the `completion` module (compinit) must load **before** any module whose activation may trigger compinit/compdef. Keep `zmodule completion` early (currently right after `fzf`) and place any new tool-activation module **after** it.
+
+**Why (2026-09 incident).** `hu3rror/zim-mise` sources `mise hook-env` output during activation. Newer mise versions inject usage-completion registration into that output:
+
+```zsh
+if ! (( $+functions[compdef] )); then autoload -Uz compinit; compinit -i; fi
+```
+
+With mise loading before `completion`, compinit ran early; the completion module then printed `warning: completion was already initialized ...` on every startup. That warning is console output during init, which also tripped Powerlevel10k's instant-prompt warning. Fix: move `zmodule completion` ahead of `zim-mise` (2026-09-25). Side benefit: compinit now runs exactly once, with the full fpath in place.
+
+**Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again.
