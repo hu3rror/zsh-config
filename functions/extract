@@ -1,5 +1,3 @@
-# ~/.config/zsh/functions/extract - Archive Extraction Helper
-
 emulate -L zsh
 
 local file

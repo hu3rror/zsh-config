@@ -1,5 +1,3 @@
-# ~/.config/zsh/functions/sudo-command-line - Toggle sudo in ZLE Buffer
-
 emulate -L zsh
 
 if [[ -z "$BUFFER" ]]; then

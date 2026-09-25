@@ -1,6 +1,3 @@
-# ~/.config/zsh/conf.d/16-fzf-tab.zsh - Fzf-Tab Completion UI
-
-# Fzf-Tab Configurations
 zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*' file-sort modification
 zstyle ':completion:*:eza' sort false

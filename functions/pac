@@ -1,14 +1,10 @@
-# ~/.config/zsh/functions/pac - Interactive Pacman & Paru Package Helper
-
 emulate -L zsh
 
-# Dependency Check
 if ! (( $+commands[fzf] )); then
     print -u2 -P "%F{red}[error]%f 'fzf' is required for the pac function."
     return 1
 fi
 
-# Helper Detection & Local Variable Scoping
 local helper="pacman"
 (( $+commands[paru] )) && helper="paru"
 

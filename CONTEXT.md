@@ -38,7 +38,7 @@ Without this file, zsh reads its default `~/.zshrc` and never finds this config.
 | `10-` | `wsl2.zsh` | WSL2-specific env (d3d12, ssh-agent); self-guards, no-op elsewhere |
 | `20-` | `options.zsh` | Shell options, keybindings |
 | `22-` | `history.zsh` | History options & file storage |
-| `24-` | `syntax-highlight.zsh` | zsh-syntax-highlighting styles |
+| `24-` | `syntax-highlight.zsh` | zsh-syntax-highlighting styles (styles are read by the module when Zim loads it in `99-zim.zsh`) |
 | `26-` | `fzf-tab.zsh` | Fzf-tab completion UI |
 | `30-` | `env-tools.zsh` | Editor, pager defaults |
 | `40-` | `aliases.zsh` | Command aliases & fallbacks |
@@ -66,3 +66,5 @@ if ! (( $+functions[compdef] )); then autoload -Uz compinit; compinit -i; fi
 With mise loading before `completion`, compinit ran early; the completion module then printed `warning: completion was already initialized ...` on every startup. That warning is console output during init, which also tripped Powerlevel10k's instant-prompt warning. Fix: move `zmodule completion` ahead of `zim-mise` (2026-09-25). Side benefit: compinit now runs exactly once, with the full fpath in place.
 
 **Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again.
+
+**Disabled module.** `zsh-history-substring-search` is intentionally left commented out in `.zimrc`: it is a performance heavyweight (性能大户). Re-enable by uncommenting when the trade-off is acceptable.

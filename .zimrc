@@ -1,29 +1,15 @@
-# --- [1] Core & Completion Initialization / 核心与补全初始化 ---
-zmodule input                                      # Enhanced input / 输入增强
-zmodule fzf                                        # Fzf
-# compinit must load BEFORE any module that may trigger it. mise's
-# hook-env output runs `compinit -i` when compdef is missing; if it runs
-# first, the completion module below prints a "completion was already
-# initialized" warning on every startup.
-# compinit 必须先于可能触发它的模块（mise 的 hook-env 会在 compdef 缺失时调用 compinit）
-zmodule completion                                 # Initialize completion system (compinit) / 初始化补全系统
-zmodule hu3rror/zim-zoxide                         # zoxide
-zmodule hu3rror/zim-mise                           # mise
-zmodule romkatv/powerlevel10k --use degit          # Prompt theme / 命令提示符主题
+zmodule input
+zmodule fzf
+# compinit 必须最先加载：mise 等模块可能在 compdef 缺失时提前触发 compinit，导致启动警告（详见 CONTEXT.md 的 Zim 模块排序约束）
+zmodule completion
+zmodule hu3rror/zim-zoxide
+zmodule hu3rror/zim-mise
+zmodule romkatv/powerlevel10k --use degit
 
+zmodule zsh-users/zsh-completions --fpath src
 
-# --- [2] Completion Sources / 补全库 ---
-zmodule zsh-users/zsh-completions --fpath src      # Additional completion definitions / 补充补全定义
+zmodule Aloxaf/fzf-tab
 
+zmodule zsh-users/zsh-autosuggestions
 
-# --- [3] Completion UI / 补全界面 ---
-zmodule Aloxaf/fzf-tab                             # Fuzzy completion UI (requires compinit) / 模糊补全界面（依赖 compinit）
-
-
-# --- [5] ZLE Enhancements / ZLE交互增强 ---
-zmodule zsh-users/zsh-autosuggestions               # Command autosuggestions / 命令自动建议
-#zmodule zsh-users/zsh-history-substring-search     # History substring search / 历史命令搜索 (性能大户)
-
-
-# --- [6] Syntax Highlighting / 语法高亮 ---
-zmodule zsh-users/zsh-syntax-highlighting           # Syntax highlighting (load last) / 语法高亮（最后加载）
+zmodule zsh-users/zsh-syntax-highlighting

@@ -1,11 +1,6 @@
-# ~/.config/zsh/conf.d/14-syntax-highlight.zsh - zsh-syntax-highlighting Setup
-#
-# Styles are read by the zsh-syntax-highlighting module when Zim loads it (99-zim.zsh).
-
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Syntax Highlighting Custom Styles (Catppuccin Mocha)
 ZSH_HIGHLIGHT_STYLES[command]='fg=#a6e3a1,bold'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=#a6e3a1,italic'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=#a6e3a1'

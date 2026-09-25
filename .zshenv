@@ -1,12 +1,8 @@
-# ~/.config/zsh/.zshenv - Global Environment & PATH Configuration
-
-# XDG Base Directory Specification
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# CLI & Language Environment Configurations
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export GOPATH="$XDG_DATA_HOME/go"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
@@ -19,12 +15,10 @@ export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 
-# GPG TTY Configuration for Interactive Shells
 if [[ -o interactive ]]; then
     export GPG_TTY="${TTY:-$(tty 2>/dev/null)}"
 fi
 
-# System PATH Construction (User local paths take precedence; auto-deduplicated)
 typeset -U path PATH
 path=(
     $HOME/bin(N-/)

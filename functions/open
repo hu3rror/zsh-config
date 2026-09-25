@@ -1,5 +1,3 @@
-# ~/.config/zsh/functions/open - Open files/directories using xdg-open
-
 emulate -L zsh
 
 local open_cmd

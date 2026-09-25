@@ -1,15 +1,10 @@
-# ~/.config/zsh/conf.d/20-aliases.zsh - Command Aliases & Fallbacks
-
-# Navigation & Basic Aliases
 alias se="sudoedit"
 alias grep='grep --color=auto'
 alias ':q'='exit'
 alias '。。'='..'
 
-# Aliases for Autoload Functions
 alias x='extract'
 
-# File Listing Aliases (eza / ls)
 if command_is_available eza; then
     alias ls='eza --classify auto'
     alias l='ls --long'
@@ -24,7 +19,6 @@ else
     alias ll='ls -lh'
 fi
 
-# Git Aliases
 if command_is_available git; then
     alias g='git'
     alias ga='git add'
@@ -50,7 +44,6 @@ if command_is_available git; then
     alias gsh='git show'
 fi
 
-# Editor Aliases
 if command_is_available nvim; then
     alias vi='nvim'
     alias v='nvim'
@@ -66,7 +59,6 @@ else
     alias edit='nano'
 fi
 
-# Package Manager & Systemd Aliases
 if command_is_available pacman; then
     alias sp='sudo pacman'
     alias spp='sudo pacman -Syu'
