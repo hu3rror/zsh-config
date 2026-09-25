@@ -42,14 +42,16 @@ Without this file, zsh reads its default `~/.zshrc` and never finds this config.
 | `22-` | `history.zsh` | History options & file storage |
 | `24-` | `syntax-highlight.zsh` | zsh-syntax-highlighting styles (styles are read by the module when Zim loads it in `99-zim.zsh`) |
 | `26-` | `fzf-tab.zsh` | Fzf-tab completion UI |
+| `28-` | `title.zsh` | Terminal title sync (cwd + running command) |
 | `30-` | `env-tools.zsh` | Editor, pager defaults |
 | `40-` | `aliases.zsh` | Command aliases & fallbacks |
 | `99-` | `zim.zsh` | Zim framework bootstrap |
 
-Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `05-tools` resolves shared tool availability (lexically before its consumers at 26/40), `10/20/30/40` are primary tiers, `22/24/26` are sub-concerns within the options tier.
+Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `05-tools` resolves shared tool availability (lexically before its consumers at 26/40), `10/20/30/40` are primary tiers, `22/24/26/28` are sub-concerns within the options tier.
 
 ## Key concepts
 
+- **terminal title** — the text shown in the terminal emulator's window/tab header, updated via OSC 0. While idle it mirrors the tildified current directory (precmd); while a command runs it mirrors the command line (preexec, with control characters stripped). Terminals without title support silently ignore the sequence. Distinct from `keep_current_path`, which is Windows Terminal-only working-directory tracking (OSC 9;9) and invisible.
 - **command_is_available** — a predicate function `(( $+commands[$1] ))` used by all modules and autoloaded functions to conditionally enable features. Defined once in `conf.d/00-util.zsh` (the utility tier, sourced first), available to everything that runs later. Semantics: probes PATH executables only — builtins, aliases and functions are not matched.
 - **Autoloaded functions** — `extract`, `sudo-command-line`, `pac`, `open` and the internal guard `zim-bootstrap-check` live in `functions/` and are loaded on first invocation (unconditional registration in `.zshrc`).
   - **Lazy-load ordering** — `.zshrc` registers these in `$fpath`/`autoload` *before* the `conf.d/` loop runs, but registration does not execute the body. The function body runs only on first call, by which point `command_is_available` is already defined; `extract`, `open` and `pac` route all availability checks through it.
