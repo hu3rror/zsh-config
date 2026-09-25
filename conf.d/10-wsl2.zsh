@@ -15,3 +15,10 @@ fi
 if command_is_available wsl2-ssh-agent && [[ -z "$SSH_AUTH_SOCK" || ! -S "$SSH_AUTH_SOCK" ]]; then
     eval "$(wsl2-ssh-agent)"
 fi
+
+if [[ -n "$WT_SESSION" ]]; then
+    keep_current_path() {
+        printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
+    }
+    precmd_functions+=(keep_current_path)
+fi
