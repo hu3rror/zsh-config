@@ -4,7 +4,7 @@ _ZDOTDIR="${ZDOTDIR:-$HOME/.config/zsh}"
 
 typeset -U fpath
 fpath=("$_ZDOTDIR/functions" $fpath)
-autoload -Uz command_is_available extract sudo-command-line pac open 
+autoload -Uz extract sudo-command-line pac open
 
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
