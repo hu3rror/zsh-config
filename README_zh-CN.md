@@ -70,6 +70,7 @@ exec zsh
 ├── .p10k.zsh        # Powerlevel10k 主题配置
 ├── conf.d/          # 模块化配置文件
 │   ├── 00-util.zsh       # 工具函数（command_is_available）
+│   ├── 05-tools.zsh       # 工具可用性标志（EZA_AVAILABLE）
 │   ├── 10-wsl2.zsh       # WSL2 优化（其他环境跳过）
 │   ├── 20-options.zsh    # Shell 选项 & 快捷键
 │   ├── 22-history.zsh    # 历史记录设置

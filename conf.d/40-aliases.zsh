@@ -5,7 +5,7 @@ alias '。。'='..'
 
 alias x='extract'
 
-if command_is_available eza; then
+if (( EZA_AVAILABLE )); then
     alias ls='eza --classify auto'
     alias l='ls --long'
     alias l1='l --oneline'
@@ -44,20 +44,8 @@ if command_is_available git; then
     alias gsh='git show'
 fi
 
-if command_is_available nvim; then
-    alias vi='nvim'
-    alias v='nvim'
-    alias vim='nvim'
-    alias edit='nvim'
-elif command_is_available vim; then
-    alias vi='vim'
-    alias v='vim'
-    alias edit='vim'
-else
-    alias vi='nano'
-    alias v='nano'
-    alias edit='nano'
-fi
+alias vi="$EDITOR" v="$EDITOR" edit="$EDITOR"
+[[ $EDITOR == nvim ]] && alias vim="$EDITOR"
 
 if command_is_available pacman; then
     alias sp='sudo pacman'

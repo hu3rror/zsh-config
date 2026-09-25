@@ -36,6 +36,7 @@ Without this file, zsh reads its default `~/.zshrc` and never finds this config.
 | Prefix | File | Responsibility |
 |--------|------|---------------|
 | `00-` | `util.zsh` | `command_is_available` predicate; must stay lexically first — no consumer may precede it |
+| `05-` | `tools.zsh` | Shared tool availability flags (`EZA_AVAILABLE`); resolves each tool once per session |
 | `10-` | `wsl2.zsh` | WSL2-specific env (d3d12, ssh-agent); self-guards, no-op elsewhere |
 | `20-` | `options.zsh` | Shell options, keybindings |
 | `22-` | `history.zsh` | History options & file storage |
@@ -45,7 +46,7 @@ Without this file, zsh reads its default `~/.zshrc` and never finds this config.
 | `40-` | `aliases.zsh` | Command aliases & fallbacks |
 | `99-` | `zim.zsh` | Zim framework bootstrap |
 
-Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `10/20/30/40` are primary tiers, `22/24/26` are sub-concerns within the options tier.
+Files are sourced in lexical order by `.zshrc`'s glob loop. Numbering leaves room for insertion: `00-util` is the utility tier, `05-tools` resolves shared tool availability (lexically before its consumers at 26/30/40), `10/20/30/40` are primary tiers, `22/24/26` are sub-concerns within the options tier.
 
 ## Key concepts
 
@@ -69,3 +70,10 @@ With mise loading before `completion`, compinit ran early; the completion module
 **Dumpfile.** The only compinit dumpfile is `$XDG_CACHE_HOME/zsh_dumpfile` (set in `99-zim.zsh`). The default `~/.config/zsh/.zcompdump` was written only by the premature mise compinit (no `-d` argument) and is now obsolete — it has been removed. If it ever reappears, some activation script is calling compinit without `-d` again.
 
 **Disabled module.** `zsh-history-substring-search` is intentionally left commented out in `.zimrc`: it is a performance heavyweight (性能大户). Re-enable by uncommenting when the trade-off is acceptable.
+
+## Tool selection
+
+- **EDITOR as the tool-selection interface** — `30-env-tools` resolves the editor once (`nvim` > `vim` > `nano`) and exports the result via `EDITOR`/`VISUAL`/`MANPAGER`. `40-aliases` binds `vi`/`v`/`vim`/`edit` to the resolved `EDITOR` instead of re-probing. Invariant: `30-env-tools` always sets `EDITOR`, and its lexical position before `40-aliases` is load-bearing.
+- **EZA_AVAILABLE** — the eza availability flag, resolved once in `05-tools.zsh` (lexically before `26-fzf-tab`). Consumers (`26-fzf-tab` preview style, `40-aliases` ls aliases) branch on the flag; they never re-probe eza.
+- **paru: two decisions, different timing** — the `p` alias is a startup-time decision in `40-aliases`; `pac`'s helper selection is a call-time decision inside a lazy function. Both probe `command_is_available paru`, deliberately: `pac` must reflect system state at call time. Do not consolidate into a startup flag.
+- **MANPAGER asymmetry** — `MANPAGER` is nvim-only by design (`let paging=1` is nvim-specific syntax); the vim branch falls back to `PAGER`. Intentional, not a bug.

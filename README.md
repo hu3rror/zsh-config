@@ -70,6 +70,7 @@ Zim downloads its modules on first run.
 ├── .p10k.zsh        # Powerlevel10k theme configuration
 ├── conf.d/          # Modular configuration files
 │   ├── 00-util.zsh       # Utility functions (command_is_available)
+│   ├── 05-tools.zsh       # Tool availability flags (EZA_AVAILABLE)
 │   ├── 10-wsl2.zsh       # WSL2 optimizations (skips elsewhere)
 │   ├── 20-options.zsh    # Shell options & keybindings
 │   ├── 22-history.zsh    # History options
