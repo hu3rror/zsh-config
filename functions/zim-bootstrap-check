@@ -16,5 +16,5 @@ if (( mise_line > 0 && (completion_line == 0 || completion_line > mise_line) ));
 fi
 
 if [[ -f "$zdotdir/.zcompdump" ]]; then
-    print -u2 -P "%F{red}[error]%f $zdotdir/.zcompdump exists — some activation script ran compinit without -d (ordering violation or a new tool-activation module). Delete it and check .zimrc order. See CONTEXT.md → Zim module ordering constraints."
+    print -u2 -P "%F{red}[error]%f $zdotdir/.zcompdump exists — compinit without -d ran during startup: either a TERM=dumb shell skipped the completion module (the WSL boot console login does this; 10-wsl2.zsh promotes TERM) or an activation script ran compinit (ordering violation / new tool-activation module). Delete it, then check .zimrc order and TERM handling. See CONTEXT.md → Zim module ordering constraints."
 fi

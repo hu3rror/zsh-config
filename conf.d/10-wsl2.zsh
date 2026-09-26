@@ -2,6 +2,15 @@ if [[ ! -f /proc/sys/fs/binfmt_misc/WSLInterop && -z "$WSL_DISTRO_NAME" ]]; then
     return
 fi
 
+# The WSL boot console login shell inherits no TERM from Windows and zsh falls
+# back to TERM=dumb; the Zim completion module then skips itself and mise's
+# hook-env runs compinit without -d, dropping a stray .zcompdump into $ZDOTDIR
+# on every boot. Promote to a real terminal so completion initializes normally
+# (see CONTEXT.md → Zim module ordering constraints, 2026-09-26 incident).
+if [[ ${TERM:-dumb} == dumb ]]; then
+    export TERM=xterm-256color
+fi
+
 if [[ -f /usr/lib/dri/d3d12_dri.so || -f /usr/lib/x86_64-linux-gnu/dri/d3d12_dri.so ]]; then
     export GALLIUM_DRIVER=d3d12
     export LIBVA_DRIVER_NAME=d3d12

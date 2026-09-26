@@ -73,9 +73,32 @@ check "completion before mise → silent"          "$tmp/good.zimrc"        "$tm
 check "mise before completion → order warning"   "$tmp/bad.zimrc"         "$tmp/zdotdir-clean" "must precede"
 check "completion missing → order warning"       "$tmp/nocompletion.zimrc" "$tmp/zdotdir-clean" "must precede"
 check "mise absent → silent"                     "$tmp/nomise.zimrc"      "$tmp/zdotdir-clean"
-check ".zcompdump present → dumpfile warning"    "$tmp/good.zimrc"        "$tmp/zdotdir-dirty" "compinit without -d"
+check ".zcompdump present → dumpfile warning"    "$tmp/good.zimrc"        "$tmp/zdotdir-dirty" "compinit without -d" "TERM=dumb"
 check "bad order + .zcompdump → both warnings"   "$tmp/bad.zimrc"         "$tmp/zdotdir-dirty" "must precede" "compinit without -d"
 check "missing .zimrc → silent, no crash"        "$tmp/nonexistent.zimrc" "$tmp/zdotdir-clean"
+
+# --- 10-wsl2 TERM promotion (root cause of the stray .zcompdump) -----------
+# Seam: conf.d/10-wsl2.zsh promotes TERM=dumb to xterm-256color so the Zim
+# completion module initializes normally instead of letting mise's hook-env
+# run compinit without -d. Source it with a fake WSL environment and assert
+# the exported TERM.
+check_term() {
+    local desc="$1" expect="$2" envs="$3"
+    local got
+    got=$(env ${=envs} zsh -fc 'source "$1/conf.d/00-util.zsh"; source "$1/conf.d/10-wsl2.zsh"; print -r -- "$TERM"' zsh "$root" 2>&1)
+    if [[ $got == "$expect" ]]; then
+        (( ++pass ))
+        print -P "%F{green}PASS%f  $desc"
+    else
+        (( ++fail ))
+        print -P "%F{red}FAIL%f  $desc"
+        print "        expected: $expect"
+        print "        got:      $got"
+    fi
+}
+
+check_term "TERM=dumb on WSL → promoted to xterm-256color" xterm-256color 'WSL_DISTRO_NAME=fake TERM=dumb'
+check_term "TERM already set → unchanged"                xterm-256color 'WSL_DISTRO_NAME=fake TERM=xterm-256color'
 
 print -P ""
 print -P "%B$pass passed, $fail failed%b"
